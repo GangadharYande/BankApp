@@ -22,6 +22,9 @@ public class UserServiceImpl implements UserService{
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    TransactionService  transactionService;
+
     @Override
     public BankResponse createAccount(UserRequest userRequest) {
         /*  Creating an account - saving a new user in to DB
@@ -124,6 +127,17 @@ public class UserServiceImpl implements UserService{
         User userToCredit = userRepository.findByAccountNumber(request.getAccountNumber());
         userToCredit.setAccountBalance(userToCredit.getAccountBalance().add(request.getAmount()));
         userRepository.save(userToCredit);
+
+        // Save Transaction
+        TransactionDTO transactionDTO = TransactionDTO.builder()
+                .accountNumber(userToCredit.getAccountNumber())
+                .transactionType("CREDIT")
+                .amount(request.getAmount())
+                .build();
+
+        transactionService.saveTransaction(transactionDTO);
+
+
         return  BankResponse.builder()
                 .responseCode(AccountUtils.ACCOUNT_CREDIT_CODE_SUCCESS)
                 .responseMessage(AccountUtils.ACCOUNT_CREDIT_MESSAGE_SUCCESS)
@@ -162,10 +176,23 @@ public class UserServiceImpl implements UserService{
                     .responseMessage(AccountUtils.INSUFFICIENT_FUND_MESSAGE)
                     .accountInfo(null)
                     .build();
-        } else {
+        }
+
+
+
+
+        else {
             // Perform the debit operation
             userToDebit.setAccountBalance(userToDebit.getAccountBalance().subtract(request.getAmount()));
             userRepository.save(userToDebit);
+
+            TransactionDTO transactionDTO = TransactionDTO.builder()
+                    .accountNumber(userToDebit.getAccountNumber())
+                    .transactionType("DEBIT")
+                    .amount(request.getAmount())
+                    .build();
+
+            transactionService.saveTransaction(transactionDTO);
 
             return BankResponse.builder()
                     .responseCode(AccountUtils.ACCOUNT_DEBIT_CODE_SUCCESS)
@@ -178,6 +205,8 @@ public class UserServiceImpl implements UserService{
                             .build())
                     .build();
         }
+
+
     }
 
     @Override
@@ -238,6 +267,14 @@ public class UserServiceImpl implements UserService{
                 .build();
 
         emailService.senderEmailAlert(creditAlert);
+
+        TransactionDTO transactionDTO = TransactionDTO.builder()
+                .accountNumber(destinationAccountUser.getAccountNumber())
+                .transactionType("TRANSFER")
+                .amount(request.getAmount())
+                .build();
+
+        transactionService.saveTransaction(transactionDTO);
         return BankResponse.builder()
                 .responseCode(AccountUtils.TRANSFER_SUCCESSFUL_CODE)
                 .responseMessage(AccountUtils.TRANSFER_SUCCESSFUL_MESSAGE)
