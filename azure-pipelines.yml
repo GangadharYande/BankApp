@@ -1,0 +1,19 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- checkout: self
+  persistCredentials: true
+
+- script: |
+    git remote add azure https://SpringOrg@dev.azure.com/SpringOrg/Banking%20Application%20using%20Springboot/_git/Bank_App
+    git push azure --mirror
+  displayName: 'Sync GitHub to Azure DevOps'
