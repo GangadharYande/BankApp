@@ -194,9 +194,10 @@ The application follows a layered architecture:
 2. Configure Database:
    Update the application.properties or application.yml file with your MySQL database configuration.
    ```bash
-   spring.datasource.url=jdbc:mysql://localhost:3306/bank
+   spring.datasource.url=jdbc:mysql://localhost:3306/bank_app
    spring.datasource.username=root
-   spring.datasource.password=yourpassword
+   spring.datasource.password=root
+   spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
    spring.jpa.hibernate.ddl-auto=update
    ```
 3. Build the Application:
