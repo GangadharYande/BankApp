@@ -66,6 +66,9 @@ Users can deposit or withdraw money from their accounts. These operations update
 ### Transaction History
 Users can view the history of transactions, filter by date range, and search for specific transactions.
 
+### Bank Statement via Email
+User Can request Transaction statements from start date to end date
+
 ## Notifications
 ### Email Notifications
 Users receive email notifications for significant events such as account creation, transactions, and profile updates.
@@ -90,13 +93,19 @@ The application follows a layered architecture:
 
 ### Tables Descriptions
 #### UserAccounts
-- customer_id (PRIMARY KEY)
-- account_number
-- password
+- id (PRIMARY KEY)
 - first_name
 - last_name
+- middle_name
+- gender
+- address
+- State
+- account_number
+- accountBalance
 - phone_number
 - email_address
+- alternatePhoneNumber
+- status
 
 #### Accounts
 - id (PRIMARY KEY)
@@ -110,12 +119,11 @@ The application follows a layered architecture:
 - type_name (e.g., Saving, Current, Loan)
 
 #### Transactions
-- id (PRIMARY KEY)
-- account_id (FOREIGN KEY referencing Accounts.id)
-- transaction_date
-- transaction_type (debit/credit)
-- transaction_cate (income, expense, transfer)
+- transactionId (PRIMARY KEY)
+- transactionType  (Debit, Credit, transfer)
 - amount
+- accountNumber 
+- status (Success , Failure)
 
 #### Notifications
 - id (PRIMARY KEY)
@@ -132,10 +140,14 @@ The application follows a layered architecture:
 
 ## Endpoints
 ### User Endpoints
-- `POST /api/users/register`: Register a new user.
-- `POST /api/users/login`: User login.
-- `GET /api/users/profile`: Get user profile.
-- `PUT /api/users/profile`: Update user profile.
+- `POST /api/user/transfer`: Register a new user.
+- `POST /api/user/register`: User login.
+- `GET /api/user/debit`: Get user profile.
+- `PUT /api/user/credit`: Update user profile.
+- `GET /api/user/nameEnquiry` : Can view by AccountNumber
+- `GET /api/user/balanceEnquiry` : Given an accountNumber,display available balance
+
+
 
 ### Account Endpoints
 - `POST /api/accounts`: Create a new account.
