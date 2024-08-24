@@ -1,0 +1,16 @@
+trigger:
+  branches:
+    include:
+      - '*'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - checkout: self
+    persistCredentials: true
+
+  - script: |
+      git remote add azure https://SpringOrg@dev.azure.com/SpringOrg/Banking%20Application%20using%20Springboot/_git/Bank_App
+      git push azure --mirror
+    displayName: 'Mirror to Azure DevOps'
