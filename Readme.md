@@ -144,7 +144,7 @@ The application follows a layered architecture:
 - `POST /api/user/register`: User login.
 - `GET /api/user/debit`: Get user profile.
 - `PUT /api/user/credit`: Update user profile.
-- `GET /api/user/nameEnquiry` : Can view by AccountNumber
+- `GET /api/user/nameEnquiry` : Can view User Name by AccountNumber
 - `GET /api/user/balanceEnquiry` : Given an accountNumber,display available balance
 
 
