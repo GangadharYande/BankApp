@@ -170,7 +170,7 @@ public class BankStatement {
         EmailDetails emailDetails = EmailDetails.builder()
                 .recipients(user.getEmail())
                 .subject("STATEMENT OF ACCOUNT")
-                .messageBody("Your transaction statements for the requested dates are attached. Kindly find them in the email.")
+                .messageBody("Your transaction statements for the requested dates are attached.")
                 .attachment(FILE_PATH)
                 .build();
 

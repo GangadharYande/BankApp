@@ -7,11 +7,10 @@ public interface UserService {
     BankResponse balanceEnquiry(EnquiryRequest request);
     String nameEnquiry(EnquiryRequest request);
 
-    // credit and debit
+    // credit  debit and Transfer
     BankResponse creditAccount(CreditDebitRequest request);
     BankResponse debitAccount(CreditDebitRequest request);
-
-
     BankResponse  transfer(TransferRequest request);
+    BankResponse login(LoginDto loginDto);
 
 }
