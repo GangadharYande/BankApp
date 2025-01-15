@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private String address;
     private String state;
     private String accountNumber;
-    private BigDecimal accountBalance;;
+    private BigDecimal accountBalance;
     private String email;
     private String password;
     private String phoneNumber;

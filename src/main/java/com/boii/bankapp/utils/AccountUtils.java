@@ -42,7 +42,6 @@ public class AccountUtils {
 
         String randomNumber = String.valueOf(randNumber);
 
-        StringBuilder accountNumber = new StringBuilder();
-        return accountNumber.append(year).append(randomNumber).toString();
+        return year + randomNumber;
     }
 }
